@@ -5,13 +5,15 @@ import Backbone from 'backbone';
 
 import App from './components/app.jsx'
 import Login from './components/login.jsx'
+import Batch from './components/adjustRecipe.jsx'
 
 
 var AppRouter = Backbone.Router.extend({
 
   routes: {
     '': 'index',
-    'login': 'login'
+    'login': 'login',
+    'batch': 'batch'
   },
 
   initialize: function(){
@@ -35,6 +37,15 @@ var AppRouter = Backbone.Router.extend({
     ReactDOM.render(
       <App router={this}>
         <Login router={this}/>
+      </App>,
+      document.getElementById('root')
+    );
+  },
+
+  batch: function(){
+    ReactDOM.render(
+      <App router={this}>
+        <Batch router={this}/>
       </App>,
       document.getElementById('root')
     );

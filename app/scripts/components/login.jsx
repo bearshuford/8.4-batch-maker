@@ -112,7 +112,7 @@ var Login = React.createClass({
       </Paper>
       <Paper style={styles.paper}>
           <h3 style={styles.header}>Log In</h3>
-        <UserForm label="Login" handleSubmit={this.handleLogin}/>
+        <UserForm label="Log In" handleSubmit={this.handleLogin}/>
       </Paper>
     </div>
     );

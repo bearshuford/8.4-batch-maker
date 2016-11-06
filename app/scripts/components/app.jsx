@@ -1,15 +1,15 @@
 import $ from 'jquery';
 import React from 'react';
 
-import {AppBar, Paper, RaisedButton} from 'material-ui';
+import {AppBar} from 'material-ui';
 
 import Theme from './theme.jsx'
 
 
 const styles = {
   appBar: {
-    marginBottom: '8px'
-  }
+  	marginBottom: '8px'
+	}
 };
 
 

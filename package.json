@@ -17,6 +17,7 @@
     "eslint-plugin-react": "^4.0.0",
     "formsy-material-ui": "^0.5.2",
     "formsy-react": "^0.18.1",
+    "fractional": "^1.0.0",
     "git-directory-deploy": "^1.4.0",
     "imagemin-cli": "^2.1.0",
     "jquery": "^2.2.0",
@@ -40,7 +41,7 @@
     "scss": "sass --style compressed --update app/styles:dist/css",
     "autoprefixer": "postcss -u autoprefixer -r dist/css/*.css",
     "lint": "eslint app/scripts",
-    "browserify": "browserify app/scripts/index.js | uglifyjs -c > dist/js/bundle.js -t",
+    "browserify": "browserify app/scripts/index.js | uglifyjs -c > dist/js/bundle.js ",
     "imagemin": "imagemin app/images dist/images -p",
     "favicon": "cp app/favicon.ico dist/",
     "build:css": "npm run scss && npm run autoprefixer",
@@ -69,6 +70,18 @@
       ],
       "browserify-shim",
       "strictify"
+    ]
+  },
+  "watchify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
     ]
   },
   "browserify-shim": {
