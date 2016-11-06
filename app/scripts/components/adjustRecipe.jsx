@@ -5,6 +5,8 @@ import React from 'react';
 import {Paper, RaisedButton} from 'material-ui';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
+var Fraction = require('fractional').Fraction;
+
 import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 
@@ -14,8 +16,9 @@ import Recipe from './../models/recipe.js'
 
 const styles = {
   table: {
-    width: 600,
-    maxWidth: "90%"
+    width: 500,
+    maxWidth: "90%",
+    margin: '12px auto'
   },
   qty: {
     width: 60,
@@ -31,6 +34,15 @@ const styles = {
   },
   formInput: {
     display: 'inline-block'
+  },
+  fraction: {
+    display: 'inline-flex',
+    flexDirection: 'column',
+    padding: '1em',
+    alignItems: 'center'
+  },
+  numerator: {
+    borderBottom: '2px solid grey'
   }
 
 };
@@ -80,7 +92,7 @@ var IngredientList = React.createClass({
     });
     return (
 
-        <Table>
+        <Table multiSelectable={true}>
           <TableBody>
             {ingredients}
           </TableBody>
