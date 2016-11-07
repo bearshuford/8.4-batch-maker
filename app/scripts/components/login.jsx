@@ -5,6 +5,8 @@ import {Paper, RaisedButton} from 'material-ui'
 import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 
+import User from './../models/User';
+
 
 
 
@@ -47,18 +49,15 @@ var UserForm = React.createClass({
     });
   },
 
-
-
   submitForm: function(data) {
     console.log(data);
     this.props.handleSubmit(data);
+
   },
-
-
 
   render: function() {
     return (
-      <Formsy.Form
+      <Formsy.Form ref="form"
         onValid={this.enableButton}
         onInvalid={this.disableButton}
         onValidSubmit={this.submitForm}
@@ -66,15 +65,15 @@ var UserForm = React.createClass({
       >
         <FormsyText
           name="username"
-          required
-          hintText=""
+          type="text"
           floatingLabelText="username"
+          required
         />
         <FormsyText
           name="password"
           type="password"
-          required
           floatingLabelText="password"
+          required
         />
         <RaisedButton
           style={styles.submit}
@@ -95,12 +94,32 @@ var UserForm = React.createClass({
 
 var Login = React.createClass({
 
+  getInitialState: function(){
+    var user = new User();
+    return{user: user};
+  },
+
+  handleFailedLogin: function(){
+    console.log('failed login');
+  },
+
   handleSignUp: function(userData){
-    console.log('handlesignup');
+    this.state.user.signup(userData.username, userData.password);
+    console.log('handlesignup', userData);
+    if(localStorage.getItem('sessionToken') !== null){
+      this.props.router.navigate('batch', {trigger: true});
+      console.log('navigating to batch');
+    }
   },
 
   handleLogin: function(userData){
-    console.log('handlelogin');
+    this.state.user.login(userData.username, userData.password);
+    if(localStorage.getItem('sessionToken') !== null){
+      this.props.router.navigate('batch', {trigger: true});
+    }
+    else {
+      this.handleFailedLogin();
+    }
   },
 
   render: function(){
@@ -108,11 +127,17 @@ var Login = React.createClass({
     <div style={styles.login}>
       <Paper style={styles.paper}>
         <h3 style={styles.header}>Sign Up</h3>
-        <UserForm label="Sign Up" handleSubmit={this.handleSignUp}/>
+        <UserForm
+          label="Sign Up"
+          handleSubmit={this.handleSignUp}
+          />
       </Paper>
       <Paper style={styles.paper}>
           <h3 style={styles.header}>Log In</h3>
-        <UserForm label="Log In" handleSubmit={this.handleLogin}/>
+        <UserForm
+          label="Log In"
+          handleSubmit={this.handleLogin}
+          />
       </Paper>
     </div>
     );

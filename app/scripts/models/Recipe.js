@@ -5,6 +5,7 @@ var Fraction = require('fractional').Fraction;
 
 var Recipe = Backbone.Model.extend({
 	idAttribute: 'objectId',
+	urlRoot: 'https://mighty-lowlands.herokuapp.com/parse/classes/Recipe',
 
 	defaults: {
 		name: '',
