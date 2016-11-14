@@ -1,9 +1,10 @@
 import _ from 'underscore';
 import Backbone from 'backbone';
+import ParseModel from './ParseModel'
 
 var Fraction = require('fractional').Fraction;
 
-var Recipe = Backbone.Model.extend({
+var Recipe = ParseModel.extend({
 	idAttribute: 'objectId',
 	urlRoot: 'https://mighty-lowlands.herokuapp.com/parse/classes/Recipe',
 

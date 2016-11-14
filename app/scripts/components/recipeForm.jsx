@@ -1,192 +1,282 @@
 import $ from 'jquery';
 import _ from 'underscore';
+import Backbone from 'backbone';
 import React from 'react';
 
-import {Paper, RaisedButton, Divider} from 'material-ui';
+import {Paper, RaisedButton, Divider, MenuItem, IconButton} from 'material-ui';
 
 import Formsy from 'formsy-react';
 import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
 
 
 import Recipe from './../models/recipe.js'
+import App from './app.jsx'
 
 
 const styles = {
   app: {
-    width: 600,
+    width: 500,
     maxWidth: "90%",
     margin: '12px auto'
   },
+  paper: {
+	  padding: 20,
+		marginTop: -70,
+		zIndex: 3000,
+		position: 'relative'
+  },
   form: {
-    display: 'flex',
+		display: 'flex',
     flexFlow: 'column nowrap',
     marginBottom: 8
   },
-  ingredientGroup: {
-    display:'flex',
-    flexFlow: 'row nowrap'
-  },
   formRow: {
     display:'flex',
-    flexFlow: 'row nowrap'
-  }
-
+    flexFlow: 'row nowrap',
+		alignItems: 'center'
+  },
+	name: {
+     fontSize: 22,
+     fontWeight: 'normal',
+     fontFamily: '"Roboto", sans-serif',
+     marginLeft: 4
+  },
+  nameInput: {
+	  fontSize: 30
+  },
+	makes: {
+		fontSize: 22,
+		fontFamily: '"Lobster", sans-serif',
+	},
+  none:  {
+    marginTop: 0
+  },
+	yieldNumber: {
+		marginLeft: 18,
+		width: 68
+	},
+	yieldName: {
+		marginLeft: 24,
+		width: 180
+	},
+	qty: {
+		width: 68,
+		marginRight: 16
+	},
+	um: {
+		width: 100,
+		marginRight: 16
+	},
+	ingredient:{
+		width: 200
+	},
+	addHeader:{
+		display: 'flex',
+		flexFlow: 'row nowrap',
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+      marginTop: 20
+	},
+	add: {
+		marginLeft: 10,
+		padding: 0
+	},
+	addIcon: {
+		fontSize: 32
+	},
+	deleteIcon: {
+		fontSize:24
+	},
+	submit:{
+		width: 100,
+		marginTop: 18
+	}
 
 };
 
 
 var IngredientFormGroup = React.createClass({
   render: function(){
+		var i = this.props.surname;
     return (
-      <div style={styles.ingredientGroup}
-        <FormsyText style={}
-          inputStyle={}
-          floatingLabelText="amount"
-          name="amount"
+      <div style={styles.formRow} >
+        <FormsyText style={styles.qty}
+          hintText="amount"
+          name={'qty-' + i}
           type="number"
         />
         <FormsySelect
-          name="um"
-          floatingLabelText="Unit"
-          menuItems={this.selectFieldItems}
+          name={'um-' + i}
+          hintText="unit"
+					style={styles.um}
         >
-          <MenuItem value={'Cups'} primaryText="Cups" />
-          <MenuItem value={'Tbs'} primaryText="Tbs" />
-          <MenuItem value={'Tsp'} primaryText="Tsp" />
+          <MenuItem value={'cups'} primaryText="cups" />
+          <MenuItem value={'tbs'} primaryText="tbs" />
+          <MenuItem value={'tsp'} primaryText="tsp" />
           <MenuItem value={'oz'} primaryText="oz" />
           <MenuItem value={'lbs'} primaryText="lbs" />
-          <MenuItem value={'lbs'} primaryText="lbs" />
+					<MenuItem value={'-'} primaryText="-" />
         </FormsySelect>
-        <FormsyText style={}
-          inputStyle={}
-          hintText="amount"
-          name="name"
-          floatingLabelText="Ingredient"
+        <FormsyText
+					style={styles.ingredient}
+          hintText="ingredient"
+          name={'name-' + i}
         />
 
+				<IconButton
+					iconStyle={styles.deleteIcon}
+					iconClassName="material-icons"
+					type="button"
+				>
+					remove_circle_outline
+				</IconButton>
 
       </div>
     )
-  };
-});
-
-
-
-var RecipeForm = React.createClass({
-
-  getInitialState: function(){
-    var ingredients = [];
-    ingredients.push(<IngredientFormGroup/>);
-    ingredients.push(<IngredientFormGroup/>);
-
-    return {
-      ingredients: ingredients
-    };
-  }
-
-  submitForm: function(data){
-    this.props.handleSubmit(data);
-  },
-
-
-
-  addIngredient: function(){
-    this.setState({
-      ingredients: ingredients.concat(<IngredientFormGroup/>)
-    })
-  }
-
-  render: function(){
-    return (
-      <Formsy.Form style={styles.form}
-          onValidSubmit={this.submitForm}
-        >
-          <div style={styles.formRow}>
-            <FormsyText style={}
-              inputStyle={}
-              floatingLabelStyle={}
-              floatingLabelText="Recipe Name"
-              name="title"
-              required
-              autoFocus
-            />
-          </div>
-          <div style={styles.formRow}>
-            <span>This recipe will make</span>
-            <FormsyText style={}
-              floatingLabelText="Amount"
-              name="yieldNumber"
-              required
-            />
-
-            <FormsyText style={}
-              hintText="cookies, loaves, etc"
-              name="yieldNumber"
-            />
-          </div>
-
-          {this.state.ingredients}
-          <RaisedButton
-            style={styles.adjustButton}
-            type="submit"
-            label="Save"
-            secondary={true}
-          />
-        </Formsy.Form>
-    )
   }
 });
+
+
+
+
+
 
 
 var RecipeFormContainer = React.createClass({
 
-  getDefaultProps: function(){
-    var rec = new Recipe(recipe);
-    return {
-      recipe: rec
-    };
-  },
-
   getInitialState: function(){
+    var ingredients = [];
+    ingredients.push(<IngredientFormGroup key={1} surname={1}/>);
+    ingredients.push(<IngredientFormGroup key={2} surname={2}/>);
+
     return {
-      adjustedRecipe: false
+      ingredients: ingredients,
+			ingredientCount: 2
     };
   },
 
 
-  handleSubmit: function(qty){
-    console.log('adjustRecipe - handleSubmit');
-    console.log('qty',qty);
+	mapInputs: function(inputs){
+		console.log('mapinputs',inputs);
 
-    var adjustedRecipe = new Recipe(this.props.recipe.toJSON());
-    adjustedRecipe.adjust(qty);
+		var ingredients = [];
+		for(var i=1; i<=this.state.ingredientCount; i++){
+			ingredients.push({
+				qty:	parseInt(inputs['qty-'+i]),
+				um:	 	inputs['um-'+i],
+				name:	inputs['name-'+i]
+			});
+		}
 
-    this.setState({'adjustedRecipe': adjustedRecipe});
+		return {
+			name: inputs.title,
+			yieldNumber: parseInt(inputs.yieldNumber),
+			yieldName: inputs.yieldName,
+			ingredients: ingredients
+		}
+	},
+
+  submitForm: function(data){
+    console.log(data);
+		var recipe = new Recipe(data);
+		var userPointer = {
+			'__type':'Pointer',
+			'className': '_User',
+			'objectId': localStorage.getItem('userId')
+		}
+		recipe.set('user', userPointer)
+		recipe.save();
+		Backbone.history.navigate('list', {trigger: true});
   },
 
-  handleReset: function(){
-    this.setState('adjustedRecipe', false);
+  addIngredient: function(){
+		var key = this.state.ingredientCount + 1;
+
+    this.setState({
+      ingredients: this.state.ingredients.concat(
+				<IngredientFormGroup
+					key={key}
+					surname={key}/>
+			),
+			ingredientCount: key
+    })
   },
 
+	removeIngredient: function(pos){
+		var fields = this.state.ingredients;
+    this.setState({ ingredients: fields.slice(0, pos).concat(fields.slice(pos+1)) })
+	},
+
+	handleBack: function(){
+		Backbone.history.navigate('recipes', {trigger: true});
+	},
 
   render: function(){
-    var original = this.props.recipe;
-    var adjusted = this.state.adjustedRecipe;
     return (
-    <div style={styles.table}>
-      <h3 style={styles.name}>{original.get('name')}</h3>
-      <RecipeForm
-        handleSubmit={this.handleSubmit}
-      />
-      <Paper>
-        <IngredientList recipe={adjusted ? adjusted : original}/>
-      </Paper>
-    </div>
+			<App handleBack={this.handleBack}>
+		    <div style={styles.app}>
+					<Paper style={styles.paper}>
+		      <Formsy.Form
+						style={styles.form}
+		        onValidSubmit={this.submitForm}
+						mapping={this.mapInputs}
+		      >
+		        <div 	style={styles.formRow}>
+		          <FormsyText  name="title"
+		            hintText="Recipe Name"
+								style={styles.nameInput}
+		            required
+								autoFocus
+		          />
+		        </div>
+
+		        <div 	style={styles.formRow}>
+		          <span style={styles.makes}>
+								will make
+							</span>
+
+		          <FormsyText  name="yieldNumber"
+								style={styles.yieldNumber}
+		            hintText="amount"
+			          type="number"
+		            required
+		          />
+
+		          <FormsyText  name="yieldName"
+								style={styles.yieldName}
+		            hintText="cookies, loaves, etc"
+		          />
+		        </div>
+
+						<div style={styles.addHeader}>
+							<span  style={styles.name}>
+								ingredients
+							</span>
+							<IconButton style={styles.add}
+								iconStyle={styles.addIcon}
+								onTouchTap={this.addIngredient}
+								iconClassName="material-icons"
+							>
+								add_circle
+							</IconButton>
+						</div>
+
+						{this.state.ingredients}
+
+		        <RaisedButton
+							style={styles.submit}
+		          type="submit"
+		          label="Save"
+		          secondary={true}
+		        />
+		      </Formsy.Form>
+				</Paper>
+				</div>
+			</App>
     )
   }
-
-
 });
+
 
 
 export default RecipeFormContainer;

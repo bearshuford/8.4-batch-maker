@@ -7,9 +7,9 @@ var User = Backbone.Model.extend({
 
   signup: function(username, password){
     var self = this;
-    localStorage.setItem('username', username);
     this.save({username: username, password: password}).then(function(response){
       console.log(response);
+      localStorage.setItem('username',username);
 
       if(response.sessionToken){
         localStorage.setItem('sessionToken', response.sessionToken);
@@ -23,17 +23,17 @@ var User = Backbone.Model.extend({
           }
         });
       }
-
+      console.log('navigating');
+      Backbone.history.navigate('recipes', {trigger: true});
     });
   },
 
   login: function(username, password){
     var url = 'https://mighty-lowlands.herokuapp.com/parse/login';
     var self = this;
-    localStorage.setItem('username', username);
 
-    $.get(url+'?username='+username+'&password='+password).then(function(response){
-
+    $.get(url+'?username='+username+'&password='+encodeURI(password)).then(function(response){
+      localStorage.setItem('username',username);
       localStorage.setItem('sessionToken', response.sessionToken);
       localStorage.setItem('userId', response.objectId);
 
@@ -44,6 +44,8 @@ var User = Backbone.Model.extend({
           xhr.setRequestHeader('X-Parse-Session-Token', response.sessionToken);
         }
       });
+    Backbone.history.navigate('list', {trigger: true});
+
     });
     return this;
   },
@@ -54,7 +56,12 @@ var User = Backbone.Model.extend({
 
     var token = localStorage.getItem('sessionToken');
     localStorage.clear();
-    $.post(url);
+
+    $.post(url).then(function(response){
+      // Backbone.history.navigate('login', {trigger: true})
+      console.log('signed out');
+    });
+    Backbone.history.navigate('login', {trigger: true})
     return this;
   }
 });

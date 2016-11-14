@@ -94,32 +94,20 @@ var UserForm = React.createClass({
 
 var Login = React.createClass({
 
-  getInitialState: function(){
-    var user = new User();
-    return{user: user};
-  },
 
-  handleFailedLogin: function(){
-    console.log('failed login');
-  },
+	getDefaultProps(){
+		var user = new User();
+    return{user: user};
+	},
+
 
   handleSignUp: function(userData){
-    this.state.user.signup(userData.username, userData.password);
-    console.log('handlesignup', userData);
-    if(localStorage.getItem('sessionToken') !== null){
-      this.props.router.navigate('batch', {trigger: true});
-      console.log('navigating to batch');
-    }
+		this.props.user.signup(userData.username, userData.password);
+
   },
 
   handleLogin: function(userData){
-    this.state.user.login(userData.username, userData.password);
-    if(localStorage.getItem('sessionToken') !== null){
-      this.props.router.navigate('batch', {trigger: true});
-    }
-    else {
-      this.handleFailedLogin();
-    }
+    this.props.user.login(userData.username, userData.password);
   },
 
   render: function(){

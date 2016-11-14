@@ -6,6 +6,9 @@ import Backbone from 'backbone';
 import App from './components/app.jsx'
 import Login from './components/login.jsx'
 import Batch from './components/adjustRecipe.jsx'
+import List from './components/list.jsx'
+import Item from './components/item.jsx'
+import RecipeForm from './components/recipeForm.jsx'
 
 
 var AppRouter = Backbone.Router.extend({
@@ -14,7 +17,11 @@ var AppRouter = Backbone.Router.extend({
     '': 'index',
     'login': 'login',
     'batch': 'batch',
-    'list': 'list'
+    'recipes/:id/edit': 'recipeAddEdit',
+    'recipes/new': 'new',
+    'recipes/:id': 'item',
+    'recipes': 'list'
+
   },
 
   initialize: function(){
@@ -26,24 +33,12 @@ var AppRouter = Backbone.Router.extend({
     });
   },
 
-  execute: function(callback, args, name){
+  loginRedirect: function(){
     var loggedIn = (localStorage.getItem('sessionToken') !== null);
-    console.log('loggedin',(localStorage.getItem('sessionToken') !== null));
-
-    setTimeout(function(){
-      var loggedIn = (localStorage.getItem('sessionToken') !== null);
-      console.log('timeout', loggedIn);
-    },2000);
-
-    if(!loggedIn && !name.includes('login')){
+    console.log('loginRedirect');
+    if(!loggedIn){
       this.navigate('login', {trigger: true});
-      return false;
     }
-    else{
-      console.log('we good', args, name);
-    }
-
-    return Backbone.Router.prototype.execute.call(this, callback, args, name);
   },
 
   index: function(){
@@ -51,43 +46,62 @@ var AppRouter = Backbone.Router.extend({
       <App router={this}/>,
       document.getElementById('root')
     );
+    this.loginRedirect();
   },
 
   login: function(){
+
     ReactDOM.render(
       <App router={this}>
         <Login router={this}/>
       </App>,
       document.getElementById('root')
     );
+    var loggedIn = (localStorage.getItem('sessionToken') !== null);
+    if(loggedIn){
+      this.navigate('recipes', {trigger: true});
+    }
   },
 
   batch: function(){
-  /*  if(localStorage.getItem('sessionToken') !== null){ */
-      ReactDOM.render(
-        <App router={this}>
-          <Batch router={this}/>
-        </App>,
-        document.getElementById('root')
-      );
-  /*  }
-    else {
-      this.navigate('login',{'trigger':true});
-    } */
+
+    ReactDOM.render(
+      <App  router={this}>
+        <Batch  router={this}/>
+      </App>,
+      document.getElementById('root')
+    );
+
+    this.loginRedirect();
   },
 
   list: function(){
-    if(localStorage.getItem('sessionToken') !== null){
+
       ReactDOM.render(
-        <App router={this}>
-          <Batch router={this}/>
-        </App>,
+        <List/>,
         document.getElementById('root')
       );
-    }
-    else{
-      this.navigate('login',{trigger:true});
-    }
+
+    this.loginRedirect();
+  },
+
+  item: function(recipeId){
+
+      ReactDOM.render(
+        <Item  recipeId={recipeId}/>,
+        document.getElementById('root')
+      );
+
+    this.loginRedirect();
+  },
+
+  new: function(){
+    ReactDOM.render(
+      <RecipeForm router={this}/>,
+      document.getElementById('root')
+    );
+
+  this.loginRedirect();
   }
 });
 

@@ -9,10 +9,23 @@ import User from './../models/User'
 
 const styles = {
   appBar: {
-  	marginBottom: '8px'
+  	marginBottom: '8px',
+    height: 128
 	},
-	title: {
+  titleDiv: {
+    height: 64,
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'center'
+  },
 
+  title: {
+
+  },
+	icon: {
+    fontSize: 26,
+    color: 'white',
+    padding: 0
 	},
   username: {
     fontFamily: '"Lobster", cursive',
@@ -36,7 +49,8 @@ var UserMenu = React.createClass({
 
     return (
       <IconMenu desktop={true}
-        iconButtonElement={<IconButton iconClassName="material-icons">account_circle</IconButton>}
+        style={styles.iconButton}
+        iconButtonElement={<IconButton iconStyle={styles.icon} iconClassName="material-icons">account_circle</IconButton>}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
       >
@@ -49,7 +63,7 @@ var UserMenu = React.createClass({
         <MenuItem
           primaryText="Settings"
           disabled={true}
-          leftIcon={<i className="material-icons">settings</i>}/>
+          leftIcon={<i style={styles.icon} className="material-icons">settings</i>}/>
         <MenuItem
           primaryText="Help"
           disabled={true}
@@ -71,25 +85,41 @@ var App = React.createClass({
   handleLogout: function(){
     var user = new User();
     user.logout();
-    console.log('handleLogout');
-    this.props.router.navigate('login', {trigger:true})
   },
+
+
+
+
 
   render: function() {
     var hasUser = (localStorage.getItem('sessionToken') !== null);
     var username = localStorage.getItem('username');
+
+    var back = this.props.handleBack !== undefined;
+
+
     return (
       <Theme>
   			<AppBar
-    			title={<span style={styles.title}>Batch Maker</span>}
-    			showMenuIconButton={false}
+    			title={ <span style={styles.title}>
+                    Batch Maker</span>
+          }
+    			showMenuIconButton={back}
     			onTitleTouchTap={this.handleTitle}
     			style={styles.appBar}
+          titleStyle={styles.titleDiv}
           iconElementRight={!hasUser ? null :
             <UserMenu
               label={username}
               handleLogout={this.handleLogout}/>
           }
+          iconElementLeft={ !back ? null :
+            <IconButton
+              iconStyle={styles.icon}
+              iconClassName="material-icons"
+              onTouchTap={this.props.handleBack}>
+                arrow_back
+            </IconButton>}
   			/>
         {this.props.children}
     	</Theme>

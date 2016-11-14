@@ -2,7 +2,7 @@ import $ from 'jquery';
 import _ from 'underscore';
 import React from 'react';
 
-import {Paper, RaisedButton, Snackbar} from 'material-ui';
+import {Paper, RaisedButton, Snackbar, Divider} from 'material-ui';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 var Fraction = require('fractional').Fraction;
@@ -17,8 +17,12 @@ import Recipe from './../models/recipe.js'
 const styles = {
   table: {
     width: 400,
+    padding: 20,
     maxWidth: "90%",
-    margin: '12px auto'
+    margin: '12px auto',
+    marginTop: -68,
+    position: 'relative',
+    zIndex: 3000
   },
   form: {
     display: 'flex',
@@ -26,10 +30,15 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '0 10px',
-    marginBottom: 8
+    marginBottom: 8,
+    marginTop: 0,
   },
   yieldGroup: {
     width: 136
+  },
+  divider: {
+    marginLeft: -20,
+    marginRight: -20
   },
   numberField: {
     width: 50,
@@ -39,11 +48,12 @@ const styles = {
   },
   name: {
     width: '100%',
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'normal',
     fontFamily: '"Roboto", sans-serif',
     marginBottom: 8,
-    marginRight: 4
+    marginRight: 4,
+    marginTop: 0
   },
   servings: {
     fontFamily: '"Lobster", cursive',
@@ -74,38 +84,14 @@ const styles = {
   },
   numerator: {
     borderBottom: '2px solid grey'
+  },
+  ingredientsLabel: {
+    
   }
 
 };
 
 
-const recipe = {
-  name: 'Curried Lentils and Rice',
-  	yieldName: 'servings',
-  	yieldNumber: 10,
-  	ingredients: [ {
-  	    qty: '1',
-  	    um: 'quart',
-  	    name: 'beef broth'
-  	  }, {
-  	    qty: '1',
-  	    um: 'cup',
-  	    name: 'dried green lentils'
-  	  }, {
-  	    qty: '1/2',
-  	    um: 'cup',
-  			name: 'basmati rice'
-  	  }, {
-  	    qty: '1',
-  	    um: 'tsp',
-  	    name: 'curry powder'
-  	  }, {
-  	    qty: '1',
-  	    um: 'tsp',
-  		  name: 'salt'
-  		}
-  ],
-};
 
 
 
@@ -188,13 +174,6 @@ var AdjustRecipeForm = React.createClass({
 
 var AdjustRecipe = React.createClass({
 
-  getDefaultProps: function(){
-    var rec = new Recipe(recipe);
-    return {
-      recipe: rec
-    };
-  },
-
   getInitialState: function(){
     return {
       adjustedRecipe: false,
@@ -229,23 +208,28 @@ var AdjustRecipe = React.createClass({
     var original = this.props.recipe;
     var adjusted = this.state.adjustedRecipe;
     return (
-    <div style={styles.table}>
+
+    <Paper style={styles.table}>
       <h3 style={styles.name}>{original.get('name')}</h3>
+      <Divider style={styles.divider}/>
       <AdjustRecipeForm
         handleSubmit={this.handleSubmit}
         yield={original.get('yieldNumber')}
         servings={original.get('yieldName')}
       />
-      <Paper>
+    <Divider inset={true}/>
+
+  <h3 style={styles.ingredientsLabel}>ingregients</h3>
+
         <IngredientList recipe={adjusted ? adjusted : original}/>
-      </Paper>
+
       <Snackbar
         open={this.state.open}
         message="Ingredient amounts updated."
         autoHideDuration={3000}
         onRequestClose={this.handleRequestClose}
       />
-    </div>
+  </Paper>
     )
   }
 
