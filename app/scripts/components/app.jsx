@@ -61,10 +61,6 @@ var UserMenu = React.createClass({
           />
         <Divider />
         <MenuItem
-          primaryText="Settings"
-          disabled={true}
-          leftIcon={<i style={styles.icon} className="material-icons">settings</i>}/>
-        <MenuItem
           primaryText="Help"
           disabled={true}
           leftIcon={<i className="material-icons">help</i>}/>

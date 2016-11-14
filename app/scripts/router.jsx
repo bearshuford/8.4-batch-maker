@@ -14,7 +14,7 @@ import RecipeForm from './components/recipeForm.jsx'
 var AppRouter = Backbone.Router.extend({
 
   routes: {
-    '': 'index',
+    '': 'list',
     'login': 'login',
     'batch': 'batch',
     'recipes/:id/edit': 'recipeAddEdit',
