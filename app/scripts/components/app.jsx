@@ -29,7 +29,7 @@ const styles = {
 	},
   username: {
     fontFamily: '"Lobster", cursive',
-    fontSize: 22,
+    fontSize: 24,
     hoverColor: 'blue',
     cursor: 'default'
   },

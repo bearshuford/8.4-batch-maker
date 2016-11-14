@@ -16,9 +16,8 @@ import Recipe from './../models/recipe.js'
 
 const styles = {
   table: {
-    width: 400,
+    maxWidth: 400,
     padding: 20,
-    maxWidth: "90%",
     margin: '12px auto',
     marginTop: -68,
     position: 'relative',
@@ -44,7 +43,8 @@ const styles = {
     width: 50,
     fontSize: 24,
     fontWeight: 500,
-    textAlign: 'center'
+    textAlign: 'center',
+    curspor: 'pointer'
   },
   name: {
     width: '100%',
@@ -57,23 +57,26 @@ const styles = {
   },
   servings: {
     fontFamily: '"Lobster", cursive',
-    position: 'relative',
+    position: 'absolute',
     fontSize: 22,
-    left: -78
+    bottom: 8,
+    right: 12,
+    cursor: 'pointer'
   },
   makes: {
     fontSize: 24,
     top: 34
   },
   adjustButton: {
-    marginTop: 18,
+    marginTop: 4,
   },
   qty: {
     width: 60,
-    overflow: 'visible'
+    overflow: 'visible',
+    marginLeft: 5
   },
   um: {
-    width: 100,
+    width: 88,
     overflow: 'visible'
   },
   fraction: {
@@ -86,7 +89,14 @@ const styles = {
     borderBottom: '2px solid grey'
   },
   ingredientsLabel: {
-    
+    marginBottom: 2,
+    marginTop: 10,
+    fontWeight: 500,
+    textAlign: 'center'
+  },
+  servingsGroup: {
+    position: 'relative',
+    marginBottom: 10
   }
 
 };
@@ -141,7 +151,7 @@ var AdjustRecipeForm = React.createClass({
       <Formsy.Form style={styles.form}
           onValidSubmit={this.submitForm}
         >
-          <div>
+          <div style={styles.servingsGroup}>
             <FormsyText style={styles.yieldGroup}
               inputStyle={styles.numberField}
               floatingLabelStyle={styles.makes}
@@ -153,12 +163,12 @@ var AdjustRecipeForm = React.createClass({
               required
               autoFocus
             />
-          <span
-            style={styles.servings}
-            onTouchTap={this.handleFocus}
-          >
-            {this.props.servings}
-          </span>
+            <span
+              style={styles.servings}
+              onTouchTap={this.handleFocus}
+            >
+              {this.props.servings}
+            </span>
           </div>
           <RaisedButton
             style={styles.adjustButton}
@@ -217,9 +227,9 @@ var AdjustRecipe = React.createClass({
         yield={original.get('yieldNumber')}
         servings={original.get('yieldName')}
       />
-    <Divider inset={true}/>
 
-  <h3 style={styles.ingredientsLabel}>ingregients</h3>
+
+    <h3 style={styles.ingredientsLabel}>ingredients</h3>
 
         <IngredientList recipe={adjusted ? adjusted : original}/>
 
