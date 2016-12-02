@@ -82,7 +82,8 @@ const styles = {
 		padding: 0
 	},
 	addIcon: {
-		fontSize: 32
+		fontSize: 32,
+		color: 'rgb(0, 188, 212)'
 	},
 	deleteIcon: {
 		fontSize:24
@@ -96,6 +97,10 @@ const styles = {
 
 
 var IngredientFormGroup = React.createClass({
+	removeIngredient: function(){
+		this.props.removeIngredient(this.props.pos)
+	},
+
   render: function(){
 		var i = this.props.surname;
     return (
@@ -127,6 +132,7 @@ var IngredientFormGroup = React.createClass({
 					iconStyle={styles.deleteIcon}
 					iconClassName="material-icons"
 					type="button"
+					onTouchTap={this.removeIngredient}
 				>
 					remove_circle_outline
 				</IconButton>
@@ -189,29 +195,30 @@ var RecipeFormContainer = React.createClass({
 		Backbone.history.navigate('list', {trigger: true});
   },
 
+	removeIngredient: function(pos){
+		console.log('removeIngredient()',pos)
+		var fields = this.state.ingredients;
+		this.setState({ ingredients: fields.slice(0, pos).concat(fields.slice(pos+1)) })
+	},
+
   addIngredient: function(){
 		var key = this.state.ingredientCount + 1;
 
+
     this.setState({
-      ingredients: this.state.ingredients.concat(
-				<IngredientFormGroup
-					key={key}
-					surname={key}/>
-			),
+      ingredients: this.state.ingredients.concat({key: key}),
 			ingredientCount: key
     })
   },
 
-	removeIngredient: function(pos){
-		var fields = this.state.ingredients;
-    this.setState({ ingredients: fields.slice(0, pos).concat(fields.slice(pos+1)) })
-	},
+
 
 	handleBack: function(){
 		Backbone.history.navigate('recipes', {trigger: true});
 	},
 
   render: function(){
+		var self = this;
     return (
 			<App handleBack={this.handleBack}>
 		    <div style={styles.app}>
@@ -261,7 +268,14 @@ var RecipeFormContainer = React.createClass({
 							</IconButton>
 						</div>
 
-						{this.state.ingredients}
+						{this.state.ingredients.map(function(ingredient, i){
+							return 	<IngredientFormGroup
+												key={ingredient.key}
+												surname={ingredient.key}
+												pos={i}
+												removeIngredient={self.removeIngredient}/>;
+						})
+						}
 
 		        <RaisedButton
 							style={styles.submit}
