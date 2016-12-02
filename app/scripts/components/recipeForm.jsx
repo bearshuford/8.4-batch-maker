@@ -22,7 +22,7 @@ const styles = {
   paper: {
 	  padding: 20,
 		marginTop: -70,
-		zIndex: 3000,
+		zIndex: 2000,
 		position: 'relative'
   },
   form: {
