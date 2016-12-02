@@ -131,6 +131,7 @@ var RecipeList = React.createClass({
   deleteRecipe: function(recipe){
     var recipes = this.state.recipes;
     recipes.remove(recipe);
+    recipe.destroy();
     this.setState({recipes: recipes});
   },
 
