@@ -22,7 +22,7 @@ import App from './app.jsx'
 const styles = {
   app: {
     width: 		480,
-    maxWidth: "90%",
+    maxWidth: "80%",
     margin: 	'12px auto'
   },
   paper: {

@@ -22,17 +22,18 @@ const styles = {
 		marginTop: -78,
     display: 'flex',
     flexFlow: 'column nowrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   paper: {
 		position: 'relative',
-		marginTop: 16,
+		marginTop: 22,
 		padding: 0,
-		minWidth: 300,
+		width: 300,
+    maxWidth: '80%',
 		zIndex: 3000
   },
   addButton: {
-    top: 26,
+    top: 20,
     right: -26,
     margin: 0,
     position: 'absolute',
@@ -48,7 +49,7 @@ const styles = {
 		fontFamily: '"Lobster", sans-serif',
 		alignSelf: 'flex-start',
 		marginTop: 4,
-		marginBottom: 4,
+		marginBottom: 0,
 		marginLeft: 14,
 		padding: 0,
 
