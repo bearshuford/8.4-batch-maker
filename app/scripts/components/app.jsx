@@ -18,10 +18,6 @@ const styles = {
     flexFlow: 'column nowrap',
     justifyContent: 'center'
   },
-
-  title: {
-
-  },
 	icon: {
     fontSize: 26,
     color: 'white',
@@ -41,12 +37,7 @@ const styles = {
 
 var UserMenu = React.createClass({
 
-
   render: function(){
-
-
-
-
     return (
       <IconMenu desktop={true}
         style={styles.iconButton}
@@ -74,18 +65,11 @@ var UserMenu = React.createClass({
 })
 
 var App = React.createClass({
-  handleTitle: function(){
-    /* this.props.router.navigate('', {trigger: true}); */
-  },
 
   handleLogout: function(){
     var user = new User();
     user.logout();
   },
-
-
-
-
 
   render: function() {
     var hasUser = (localStorage.getItem('sessionToken') !== null);
@@ -93,13 +77,10 @@ var App = React.createClass({
 
     var back = this.props.handleBack !== undefined;
 
-
     return (
       <Theme>
   			<AppBar
-    			title={ <span style={styles.title}>
-                    Batch Maker</span>
-          }
+    			title={<span> Batch Maker</span>}
     			showMenuIconButton={back}
     			onTitleTouchTap={this.handleTitle}
     			style={styles.appBar}

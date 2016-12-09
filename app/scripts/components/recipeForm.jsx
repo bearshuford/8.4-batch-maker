@@ -3,7 +3,13 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 import React from 'react';
 
-import {Paper, RaisedButton, Divider, MenuItem, IconButton} from 'material-ui';
+import {Paper, FloatingActionButton, RaisedButton,
+  Divider, MenuItem, IconButton, FlatButton} from 'material-ui';
+import Add from 'material-ui/svg-icons/content/add';
+import Save from 'material-ui/svg-icons/content/save';
+import Close from 'material-ui/svg-icons/navigation/close';
+
+import {blue500, red500, greenA200} from 'material-ui/styles/colors';
 
 import Formsy from 'formsy-react';
 import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
@@ -15,84 +21,76 @@ import App from './app.jsx'
 
 const styles = {
   app: {
-    width: 500,
+    width: 		480,
     maxWidth: "90%",
-    margin: '12px auto'
+    margin: 	'12px auto'
   },
   paper: {
-	  padding: 20,
+	  padding:   '10px 20px',
 		marginTop: -70,
-		zIndex: 2000,
-		position: 'relative'
+		zIndex: 	 2000,
+		position:  'relative'
   },
   form: {
-		display: 'flex',
-    flexFlow: 'column nowrap',
+		display: 			'flex',
+    flexFlow: 		'column nowrap',
     marginBottom: 8
   },
   formRow: {
-    display:'flex',
-    flexFlow: 'row nowrap',
+    display:	  'flex',
+    flexFlow: 	'row nowrap',
 		alignItems: 'center'
   },
 	name: {
-     fontSize: 22,
+     fontSize:   22,
      fontWeight: 'normal',
      fontFamily: '"Roboto", sans-serif',
-     marginLeft: 4
+     marginLeft: 4,
+     marginTop: 18
   },
   nameInput: {
-	  fontSize: 30
+	  fontSize: 	  30,
+		marginBottom: 4,
+		maxWidth: 	  '80%'
   },
 	makes: {
-		fontSize: 22,
+		fontSize:   22,
 		fontFamily: '"Lobster", sans-serif',
 	},
-  none:  {
+  none: {
     marginTop: 0
   },
 	yieldNumber: {
 		marginLeft: 18,
-		width: 68
+		width: 			60
 	},
 	yieldName: {
-		marginLeft: 24,
-		width: 180
+		marginLeft: 18,
+		width: 		  180
 	},
 	qty: {
-		width: 68,
-		marginRight: 16
+		width: 			 60,
+		marginRight: 16,
+		marginLeft:  6
 	},
 	um: {
-		width: 100,
+		width: 			 100,
 		marginRight: 16
 	},
-	ingredient:{
-		width: 200
+	submitAction: {
+    top: 			26,
+    right: 		-26,
+    margin: 	0,
+    position: 'absolute',
+    zIndex: 	3000
 	},
-	addHeader:{
-		display: 'flex',
-		flexFlow: 'row nowrap',
-		justifyContent: 'flex-start',
-		alignItems: 'center',
-      marginTop: 20
-	},
-	add: {
-		marginLeft: 10,
-		padding: 0
-	},
-	addIcon: {
-		fontSize: 32,
-		color: 'rgb(0, 188, 212)'
-	},
-	deleteIcon: {
-		fontSize:24
-	},
-	submit:{
-		width: 100,
-		marginTop: 18
+	removeIngredient: {
+		// paddingRight: 0,
+		// paddingLeft:  0,
+		// width: 				36
+		marginRight: -22,
+		marginLeft: -8
 	}
-
 };
 
 
@@ -106,7 +104,7 @@ var IngredientFormGroup = React.createClass({
     return (
       <div style={styles.formRow} >
         <FormsyText style={styles.qty}
-          hintText="amount"
+          hintText="#"
           name={'qty-' + i}
           type="number"
         />
@@ -123,29 +121,21 @@ var IngredientFormGroup = React.createClass({
 					<MenuItem value={'-'} primaryText="-" />
         </FormsySelect>
         <FormsyText
-					style={styles.ingredient}
           hintText="ingredient"
           name={'name-' + i}
         />
 
 				<IconButton
-					iconStyle={styles.deleteIcon}
-					iconClassName="material-icons"
 					type="button"
 					onTouchTap={this.removeIngredient}
-				>
-					remove_circle_outline
+					style={styles.removeIngredient}
+				>	<Close hoverColor={red500}/>
 				</IconButton>
 
       </div>
     )
   }
 });
-
-
-
-
-
 
 
 var RecipeFormContainer = React.createClass({
@@ -156,7 +146,7 @@ var RecipeFormContainer = React.createClass({
     ingredients.push(<IngredientFormGroup key={2} surname={2}/>);
 
     return {
-      ingredients: ingredients,
+      ingredients: 		 ingredients,
 			ingredientCount: 2
     };
   },
@@ -175,9 +165,9 @@ var RecipeFormContainer = React.createClass({
 		}
 
 		return {
-			name: inputs.title,
 			yieldNumber: parseInt(inputs.yieldNumber),
-			yieldName: inputs.yieldName,
+			yieldName: 	 inputs.yieldName,
+			name: 			 inputs.title,
 			ingredients: ingredients
 		}
 	},
@@ -203,8 +193,6 @@ var RecipeFormContainer = React.createClass({
 
   addIngredient: function(){
 		var key = this.state.ingredientCount + 1;
-
-
     this.setState({
       ingredients: this.state.ingredients.concat({key: key}),
 			ingredientCount: key
@@ -223,68 +211,62 @@ var RecipeFormContainer = React.createClass({
 			<App handleBack={this.handleBack}>
 		    <div style={styles.app}>
 					<Paper style={styles.paper}>
-		      <Formsy.Form
-						style={styles.form}
-		        onValidSubmit={this.submitForm}
-						mapping={this.mapInputs}
-		      >
-		        <div 	style={styles.formRow}>
-		          <FormsyText  name="title"
-		            hintText="Recipe Name"
-								style={styles.nameInput}
-		            required
-								autoFocus
-		          />
-		        </div>
+			      <Formsy.Form
+							style={styles.form}
+			        onValidSubmit={this.submitForm}
+							mapping={this.mapInputs}
+			      >
+			        <div 	style={styles.formRow}>
+			          <FormsyText  name="title"
+			            hintText="Recipe Name"
+									style={styles.nameInput}
+			            required
+									autoFocus
+			          />
+			        </div>
 
-		        <div 	style={styles.formRow}>
-		          <span style={styles.makes}>
-								will make
-							</span>
+			        <div 	style={styles.formRow}>
 
-		          <FormsyText  name="yieldNumber"
-								style={styles.yieldNumber}
-		            hintText="amount"
-			          type="number"
-		            required
-		          />
+			          <span  style={styles.makes}> makes </span>
 
-		          <FormsyText  name="yieldName"
-								style={styles.yieldName}
-		            hintText="cookies, loaves, etc"
-		          />
-		        </div>
+			          <FormsyText  name="yieldNumber"
+									style={styles.yieldNumber}
+			            hintText="#"
+				          type="number"
+			            required
+			          />
 
-						<div style={styles.addHeader}>
-							<span  style={styles.name}>
-								ingredients
-							</span>
-							<IconButton style={styles.add}
-								iconStyle={styles.addIcon}
+			          <FormsyText  name="yieldName"
+									style={styles.yieldName}
+			            hintText="servings"
+			          />
+
+			        </div>
+
+							<span  style={styles.name}> ingredients </span>
+
+							{this.state.ingredients.map(function(ingredient, i){
+								return 	<IngredientFormGroup
+													key={ingredient.key}
+													surname={ingredient.key}
+													pos={i}
+													removeIngredient={self.removeIngredient}/>;
+							})}
+
+							<FlatButton
+								icon={<Add/>}
 								onTouchTap={this.addIngredient}
-								iconClassName="material-icons"
-							>
-								add_circle
-							</IconButton>
-						</div>
+							/>
 
-						{this.state.ingredients.map(function(ingredient, i){
-							return 	<IngredientFormGroup
-												key={ingredient.key}
-												surname={ingredient.key}
-												pos={i}
-												removeIngredient={self.removeIngredient}/>;
-						})
-						}
+							<FloatingActionButton
+								style={styles.submitAction}
+								type="submit"
+								children={<Save/>}
+								secondary={true}
+							/>
 
-		        <RaisedButton
-							style={styles.submit}
-		          type="submit"
-		          label="Save"
-		          secondary={true}
-		        />
-		      </Formsy.Form>
-				</Paper>
+			      </Formsy.Form>
+					</Paper>
 				</div>
 			</App>
     )

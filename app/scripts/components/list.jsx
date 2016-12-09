@@ -41,7 +41,6 @@ const styles = {
 	listItem: {
 		fontSize: 28,
 		marginTop: 5
-
 	},
 	title: {
 		fontSize: 30,
@@ -151,7 +150,7 @@ var RecipeList = React.createClass({
         <Paper style={styles.paper}>
 					<h3 style={styles.title}>recipes</h3>
           <List>
-					<Divider/>
+					<Divider inset={true}/>
             {recipes}
           </List>
           <FloatingActionButton

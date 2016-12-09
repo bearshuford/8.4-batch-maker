@@ -15,11 +15,16 @@ import Recipe from './../models/recipe.js'
 
 
 const styles = {
+  app: {
+    maxWidth: '90%',
+    margin: '0 auto'
+  },
   table: {
-    maxWidth: 400,
+    maxWidth: 420,
     padding: 20,
+    paddingTop: 12,
     margin: '12px auto',
-    marginTop: -68,
+    marginTop: -61,
     position: 'relative',
     zIndex: 3000
   },
@@ -30,21 +35,21 @@ const styles = {
     justifyContent: 'space-between',
     padding: '0 10px',
     marginBottom: 8,
-    marginTop: 0,
+    marginTop: 0
   },
   yieldGroup: {
-    width: 136
+    width: 118,
+    marginRight: 8
   },
   divider: {
-    marginLeft: -20,
     marginRight: -20
   },
   numberField: {
     width: 50,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 500,
-    textAlign: 'center',
-    curspor: 'pointer'
+    marginLeft: 6,
+    cursor: 'pointer',
   },
   name: {
     width: '100%',
@@ -54,13 +59,14 @@ const styles = {
     marginBottom: 8,
     marginRight: 4,
     marginTop: 0
+
   },
   servings: {
     fontFamily: '"Lobster", cursive',
     position: 'absolute',
     fontSize: 22,
     bottom: 8,
-    right: 12,
+    right: 6,
     cursor: 'pointer'
   },
   makes: {
@@ -91,14 +97,13 @@ const styles = {
   ingredientsLabel: {
     marginBottom: 2,
     marginTop: 10,
-    fontWeight: 500,
-    textAlign: 'center'
+    fontWeight: 400,
+    fontSize: 22
   },
   servingsGroup: {
     position: 'relative',
     marginBottom: 10
   }
-
 };
 
 
@@ -119,8 +124,8 @@ var IngredientList = React.createClass({
     });
     return (
 
-        <Table multiSelectable={true}>
-          <TableBody>
+        <Table>
+          <TableBody displayRowCheckbox={false}>
             {ingredients}
           </TableBody>
         </Table>
@@ -155,7 +160,7 @@ var AdjustRecipeForm = React.createClass({
             <FormsyText style={styles.yieldGroup}
               inputStyle={styles.numberField}
               floatingLabelStyle={styles.makes}
-              floatingLabelText="Makes"
+              floatingLabelText="makes"
               name="yield"
               type="number"
               value={this.props.yield}
@@ -204,7 +209,7 @@ var AdjustRecipe = React.createClass({
     adjustedRecipe.adjust(qty);
 
     this.setState({
-      'adjustedRecipe': adjustedRecipe,
+      adjustedRecipe: adjustedRecipe,
       open: true
     });
   },
@@ -218,28 +223,29 @@ var AdjustRecipe = React.createClass({
     var original = this.props.recipe;
     var adjusted = this.state.adjustedRecipe;
     return (
+    <div style={styles.app}>
+      <Paper style={styles.table}>
+        <h3 style={styles.name}>{original.get('name')}</h3>
+        <Divider style={styles.divider} inset={true}/>
 
-    <Paper style={styles.table}>
-      <h3 style={styles.name}>{original.get('name')}</h3>
-      <Divider style={styles.divider}/>
-      <AdjustRecipeForm
-        handleSubmit={this.handleSubmit}
-        yield={original.get('yieldNumber')}
-        servings={original.get('yieldName')}
-      />
+        <AdjustRecipeForm
+          handleSubmit={this.handleSubmit}
+          yield={original.get('yieldNumber')}
+          servings={original.get('yieldName')}
+        />
 
-
-    <h3 style={styles.ingredientsLabel}>ingredients</h3>
+        <h3 style={styles.ingredientsLabel}>ingredients</h3>
 
         <IngredientList recipe={adjusted ? adjusted : original}/>
 
-      <Snackbar
-        open={this.state.open}
-        message="Ingredient amounts updated."
-        autoHideDuration={3000}
-        onRequestClose={this.handleRequestClose}
-      />
-  </Paper>
+        <Snackbar
+          open={this.state.open}
+          message="Ingredient amounts updated."
+          autoHideDuration={3000}
+          onRequestClose={this.handleRequestClose}
+        />
+      </Paper>
+    </div>
     )
   }
 

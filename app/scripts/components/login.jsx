@@ -13,7 +13,7 @@ import User from './../models/User';
 const styles = {
   login: {
     display: 'flex',
-    flexFlow: 'row nowrap',
+    flexFlow: 'row wrap',
     justifyContent: 'center'
   },
   header: {
