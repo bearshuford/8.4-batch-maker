@@ -7,7 +7,7 @@ For now. I will implement private recipes soon.
 
 ## Design
 
-I am working on getting this closer to Google's [Material Design specs](https://material.google.com/), but
+I am working on getting this closer to Google's [Material Design specs](https://material.google.com/), but the guidelines for web implementation are sparse, so I need to look elsewhere for inspiration.
 
 ## Use
 
@@ -21,12 +21,10 @@ Create an account to manage recipes. Adjust servings to make a batch of a differ
 * [material-ui](http://www.material-ui.com/) - React components that implement Google's Material Design
 * [formsy-react](https://github.com/christianalfoni/formsy-react) - dynamic forms
 
-
-
 * [Parse Server](https://parse.com/) - server for recipes & users
 * [Heroku](https://www.heroku.com/) - server hosting
-
 
 ## TODO
 [ ] **private recipes**
 [ ] **recipe editing**
+[ ] replace table in recipe item component
