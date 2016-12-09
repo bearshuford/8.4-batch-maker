@@ -24,8 +24,8 @@ Create an account to manage recipes. Adjust servings to make a batch of a differ
 * [Heroku](https://www.heroku.com/) - server hosting
 
 ## TODO
-* [ ] **private recipes**
+- [ ] **private recipes**
 
-* [ ] **recipe editing**
+- [ ] **recipe editing**
 
-* [ ] replace table in recipe item component
+- [ ] replace table in recipe item component
