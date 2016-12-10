@@ -44,7 +44,7 @@ var User = Backbone.Model.extend({
           xhr.setRequestHeader('X-Parse-Session-Token', response.sessionToken);
         }
       });
-    Backbone.history.navigate('list', {trigger: true});
+    Backbone.history.navigate('recipes', {trigger: true});
 
     });
     return this;

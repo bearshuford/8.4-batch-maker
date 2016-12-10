@@ -172,7 +172,7 @@ var AdjustRecipeForm = React.createClass({
               style={styles.servings}
               onTouchTap={this.handleFocus}
             >
-              {this.props.servings}
+              {this.props.servings.length > 0 ? this.props.servings : 'servings'}
             </span>
           </div>
           <RaisedButton

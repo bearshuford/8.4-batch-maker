@@ -181,22 +181,32 @@ var RecipeFormContainer = React.createClass({
 			'objectId': localStorage.getItem('userId')
 		}
 		recipe.set('user', userPointer)
-		recipe.save();
-		Backbone.history.navigate('list', {trigger: true});
+		recipe.save().then(function(){
+			Backbone.history.navigate('recipes', {trigger: true});
+		});
+		Backbone.history.navigate('recipes', {trigger: true});
+
   },
 
 	removeIngredient: function(pos){
 		console.log('removeIngredient()',pos)
 		var fields = this.state.ingredients;
-		this.setState({ ingredients: fields.slice(0, pos).concat(fields.slice(pos+1)) })
+		setTimeout(function() {
+			this.setState({
+				ingredients: fields.slice(0, pos).concat(fields.slice(pos+1))
+			});
+		}.bind(this), 150);
+
 	},
 
   addIngredient: function(){
 		var key = this.state.ingredientCount + 1;
-    this.setState({
-      ingredients: this.state.ingredients.concat({key: key}),
-			ingredientCount: key
-    })
+		setTimeout(function() {
+			this.setState({
+	      ingredients: this.state.ingredients.concat({key: key}),
+				ingredientCount: key
+	    });
+		}.bind(this), 100);
   },
 
 
@@ -255,6 +265,7 @@ var RecipeFormContainer = React.createClass({
 
 							<FlatButton
 								icon={<Add/>}
+								type="button"
 								onTouchTap={this.addIngredient}
 							/>
 

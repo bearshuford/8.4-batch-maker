@@ -14,16 +14,23 @@ const styles = {
   login: {
     display: 'flex',
     flexFlow: 'row wrap',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: -72,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '90%'
   },
   header: {
     marginBottom: 4,
     marginTop: 4
   },
   paper: {
-    width: 300,
+    maxWidth: 300,
+    minWidth: 240,
     margin: '10px 20px',
-    padding: 20
+    padding: 20,
+    zIndex: 3000,
+    overflow: 'hidden'
   },
   submit: {
     marginTop: 32
