@@ -1,9 +1,16 @@
 # Batch Maker
 
+
+
 A recipe CRUD application.
+
+![batch-maker](https://cloud.githubusercontent.com/assets/21989005/21202570/d95ccaf6-c21c-11e6-9387-32baa1e95fc1.gif)
 
 **All recipes are public!**
 For now. I will implement private recipes soon.
+
+
+
 
 ## Design
 
