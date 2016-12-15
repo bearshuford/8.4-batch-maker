@@ -6,8 +6,6 @@ A recipe CRUD application.
 **All recipes are public!**
 For now. I will implement private recipes soon.
 
-Try the [live demo](https://bearshuford.github.io/8.4-batch-maker/).
-
 
 
 
@@ -20,6 +18,9 @@ Mobile       |  Desktop
 I am working on getting this closer to Google's [Material Design specs](https://material.google.com/), but the guidelines for web implementation are sparse, so I need to look elsewhere for inspiration.
 
 ## Use
+
+Try the [live demo](https://bearshuford.github.io/8.4-batch-maker/).
+
 
 Create an account to manage recipes. Adjust servings to make a batch of a different size.
 
