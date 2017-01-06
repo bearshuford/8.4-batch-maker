@@ -11,11 +11,12 @@ For now. I will implement private recipes soon.
 
 ## Design
 
-Mobile       |  Desktop
-:-------------------------:|:-------------------------:
- ![batch-maker-mobile](https://cloud.githubusercontent.com/assets/21989005/21203619/48407356-c221-11e6-8396-2ab5d1e4a919.gif) |  ![batch-maker](https://cloud.githubusercontent.com/assets/21989005/21202570/d95ccaf6-c21c-11e6-9387-32baa1e95fc1.gif)
+![batch-maker](https://cloud.githubusercontent.com/assets/21989005/21202570/d95ccaf6-c21c-11e6-9387-32baa1e95fc1.gif)
+
 
 I am working on getting this closer to Google's [Material Design specs](https://material.google.com/), but the guidelines for web implementation are sparse, so I need to look elsewhere for inspiration.
+
+The layout works on mobile and required very little tweaking of the desktop design.
 
 ## Use
 
