@@ -12,6 +12,7 @@ import User from './../models/User';
 
 const styles = {
   login: {
+    position: 'relative',
     display: 'flex',
     flexFlow: 'row wrap',
     justifyContent: 'center',
@@ -29,8 +30,7 @@ const styles = {
     minWidth: 240,
     margin: '10px 20px',
     padding: 20,
-    zIndex: 3000,
-    overflow: 'hidden'
+    zIndex: 3000
   },
   submit: {
     marginTop: 32
