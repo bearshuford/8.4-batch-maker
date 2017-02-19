@@ -58,7 +58,14 @@ var UserMenu = React.createClass({
     return (
       <IconMenu desktop={true}
         style={styles.iconButton}
-        iconButtonElement={<IconButton iconStyle={styles.icon} iconClassName="material-icons">account_circle</IconButton>}
+        menuStyle={{zIndex: 3000}}
+        iconButtonElement={
+          <IconButton
+            iconStyle={styles.icon}
+            iconClassName="material-icons">
+            account_circle
+          </IconButton>
+        }
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
       >

@@ -26,7 +26,7 @@ const styles = {
     margin: '12px auto',
     marginTop: -61,
     position: 'relative',
-    zIndex: 3000
+    zIndex: 2000
   },
   form: {
     display: 'flex',

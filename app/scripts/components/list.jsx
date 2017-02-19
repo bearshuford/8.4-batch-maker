@@ -30,14 +30,14 @@ const styles = {
 		padding: 0,
 		width: 300,
     maxWidth: '80%',
-		zIndex: 3000
+		zIndex: 2000
   },
   addButton: {
     top: 20,
     right: -26,
     margin: 0,
     position: 'absolute',
-    zIndex: 3000
+    zIndex: 2000
   },
 	listItem: {
 		fontSize: 28,
