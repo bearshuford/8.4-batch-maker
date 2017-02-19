@@ -36,7 +36,8 @@ const styles = {
   fab: {
     position: 'fixed',
     bottom: 29,
-    right: 25
+    right: 25,
+    zIndex: 30000
   }
 };
 
@@ -121,6 +122,7 @@ var App = React.createClass({
           backgroundColor="black"
           children={<BearIcon color="white"/>}
           href="http://bear.works"
+          onTouchTap={function(e){e.preventDefault();}}
         />
     	</Theme>
 		);
