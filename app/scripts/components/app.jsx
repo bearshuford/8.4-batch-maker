@@ -129,7 +129,7 @@ var App = React.createClass({
           backgroundColor="black"
           children={<BearIcon color="white"/>}
           href="http://bear.works"
-          onTouchTap={function(e){e.preventDefault();}}
+          disableTouchRipple={true}
         />
     	</Theme>
 		);

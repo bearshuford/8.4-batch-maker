@@ -12,10 +12,6 @@ import AdjustRecipe from './adjustRecipe.jsx';
 
 import App from './app.jsx';
 
-
-
-
-
 var RecipeItem = React.createClass({
 
   getInitialState: function(){
@@ -25,12 +21,10 @@ var RecipeItem = React.createClass({
   },
 
   componentWillMount: function(){
-    var recipe = this.state.recipe;
-
+    var recipe   = this.state.recipe;
     var recipeId = this.props.recipeId;
 
-    // If no recipe, bail
-    if(!recipeId){
+    if(!recipeId){  // If no recipe, bail
       return;
     }
 
@@ -39,7 +33,6 @@ var RecipeItem = React.createClass({
     recipe.fetch().then(() => {
       this.setState({recipe: recipe});
     });
-
   },
 
   handleBack: function(){
@@ -52,10 +45,8 @@ var RecipeItem = React.createClass({
       <App handleBack={this.handleBack}>
         <AdjustRecipe recipe={recipe}/>
       </App>
-
 		);
   }
-
 
 
 });
